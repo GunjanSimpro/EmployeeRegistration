@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png" />
+    <link href="../Style/Plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../Style/css/style.css" rel="stylesheet" />
+    <link href="../Style/css/color.css" rel="stylesheet" />
+    <link href="../Style/icons/fontawesome/css/font-awesome.min.css" rel="stylesheet" />
+</head> 
+@*<body class="fix-header fix-sidebar card-no-border logo-center" oncontextmenu="return false;" >*@
+    <body class="fix-header fix-sidebar card-no-border logo-center">
+        <div id="main-wrapper">
+            <nav class="navbar navbar-toggleable-md navbar-light bg-faded topbar navbar-fixed-top" style=" padding-left 0px;">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">
+                        <i class="fa fa-bars" style="line-height: 1.5;"></i>
+                    </span>
+                </button>
+                <div class="navimg">
+                    <a href="../Home/Dashboard.aspx" class="text-center db navbar-brand" style="width:125px">
+                        <img src="../Style/Images/logo.png" class="img-responsive" />
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+                </div>
+                <div class="pull-right pfdrwn">
+
+                    <a href="javascript:void(0)" class="dbdrn" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span class="profile-img text-center image">
+
+                            <img src="../Style/Images/user.png" class="img-circle" width="35" height="35" alt="" />
+
+                            <span class="ph-5">
+                                <span>
+                                    <span id="lblUsername" style="color: #fff;"> @Session["UserName"]</span>
+                                </span>
+                                <i class="fa fa-caret-down" style="color: #fff;"></i>
+                            </span>
+                        </span>
+                    </a>
+
+                    <ul class="dropdown-menu" style="margin-top:0px !important;right:0px;left: auto;padding:10px">
+
+                        <li><a href="javascript:void(0);" class="waves-effect waves-block"><i class="fa fa-user"></i> Change Password</a></li>
+
+                        <li><a href="~/Login/Index" class="waves-effect waves-block"><i class="fa fa-sign-out"></i> Sign Out</a></li>
+
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="page-wrapper">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+
+        <script src="../Style/Plugins/bootstrap/js/popper.min.js"></script>
+        <script src="../Style/Plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script src="../Style/Plugins/DataTable/jquery.dataTables.min.js"></script>
+        <script src="../Style/Plugins/DataTable/dataTables.bootstrap.min.js"></script>
+        <script src="../Style/Plugins/DataTable/dataTables.buttons.min.js"></script>
+        <script src="../Style/Plugins/DataTable/jszip.min.js"></script>
+        <script src="../Style/Plugins/DataTable/pdfmake.min.js"></script>
+        <script src="../Style/Plugins/DataTable/vfs_fonts.js"></script>
+        <script src="../Style/Plugins/DataTable/buttons.html5.min.js"></script>
+        <link href="../Style/Plugins/DataTable/buttons.bootstrap.min.css" rel="stylesheet" />
+        <link href="../Style/Plugins/DataTable/dataTables.bootstrap.min.css" rel="stylesheet" />
+        @*<script>
+
+                    $(document).on('click', '.option-btn', function () {
+
+                        if ($('.card-no-border').find('.control-center').hasClass('open'))
+                        {
+                            $('.control-center').removeClass('open');
+                            $('.option-btn').removeClass('open');
+                        }
+
+
+                $(this).toggleClass('open');
+                $(this).closest('.control-center').toggleClass('open');
+                //$(this).closest('.control-center').addClass('open');
+                //$(this).closest('.option-btn').addClass('open');
+            });
+                </script>*@
+        <script>
+        document.onkeydown = function (e) {
+            if (event.keyCode == 123) {
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+                return false;
+            }
+            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+                return false;
+            }
+        }
+        </script>
+    </body>
+</html>
+

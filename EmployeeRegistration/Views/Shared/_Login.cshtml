@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png" />
+    <link href="../Style/Plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" /> 
+    <link href="../Style/css/style.css" rel="stylesheet" />
+    <link href="../Style/css/color.css" rel="stylesheet" />
+    <link href="../Style/icons/fontawesome/css/font-awesome.min.css" rel="stylesheet" />
+   
+</head>
+<body class="loginbody">
+   
+    <div class="preloader" style="display: none;">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle>
+        </svg>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+    <script src="~/Style/Plugins/jquery/jquery.min.js"></script>
+    <script src="~/Style/Plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Style/Plugins/bootstrap/js/popper.min.js"></script>
+    <script>
+           $(function () {
+               "use strict";
+               $(function () {
+                   $(".preloader").fadeOut()
+               });
+               //, jQuery(document).on("click", ".mega-dropdown", function (i) {
+               //    i.stopPropagation()
+               //});
+               var i = function () {
+                   var i = window.innerWidth > 0 ? window.innerWidth : this.screen.width,
+                       e = 70;
+                   1170 > i ? ($("body").addClass("mini-sidebar"), $(".navbar-brand span").hide(), $(".sidebartoggler i").addClass("ti-menu")) : ($("body").removeClass("mini-sidebar"), $(".navbar-brand span").show(), $(".sidebartoggler i").removeClass("ti-menu"));
+                   var o = (window.innerHeight > 0 ? window.innerHeight : this.screen.height) - 1;
+                   o -= e, 1 > o && (o = 1), o > e && $(".page-wrapper").css("min-height", o + "px")
+               };
+
+               //$("#to-recover").on("click", function () {
+               //    $("#loginform").slideUp(), $("#recoverform").fadeIn();
+               //    $(".login-box").css('width', '600px');
+               //   // $(".login-register").css('padding-top', '3%');
+               //}),
+               //  $("#closeforget").on("click", function () {
+               //      $("#loginform").slideDown(), $("#recoverform").fadeOut()
+               //      $(".login-box").css('width', '400px'); 
+               //   //   $(".login-register").css('padding-top', '10%');  
+               //  })
+
+           });
+    </script>
+
+    <style>
+        .card-body {
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            padding: 1.25rem;
+        }
+    </style>
+</body>
+</html>

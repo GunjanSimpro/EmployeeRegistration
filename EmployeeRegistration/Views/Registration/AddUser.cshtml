@@ -1,0 +1,226 @@
+﻿@model ERM.Core.Model.Registration
+@{
+    ViewBag.Title = "AddUser";
+    Layout = "~/Views/Shared/_Login.cshtml";
+}
+
+
+<section id="wrapper" class="login-register login-sidebar" style="background-image:url(../Style/Images/login-bg.jpg);">
+    <div class="login-box card">
+        <div class="card-body">
+           @using (Html.BeginForm("AddUser", "Registration", FormMethod.Post, new { @id = "form-login" }))
+           {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal form-materials" id="recoverforms">
+                <a href="Login.aspx" class="text-center db">
+                    <img src="../Style/Images/logo.png" style="width:35%;margin-bottom:10px" />
+                </a>
+
+                <a id="closeforget" href="javascript:void(0)" style="position: absolute;right: 39px;    top: 20px;"><i class="fa fa-times-circle"></i></a>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <label>First Name</label>
+                        @*<input class="form-control" type="text" required="">*@
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <label>Last Name</label>
+                        @*<input class="form-control" type="text" required="">*@
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <label>Email</label>
+                        @*<input class="form-control" type="email" required="">*@
+                        @Html.TextBoxFor(m => m.EmailId, new { type = "email", placeholder = "example@mail.ru", @class = "form-control" })
+                        <span class="text-danger" style="display:none" id="errorMsg">Please Enter Valid Enail Id</span>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <label>Mobile Number</label>
+                        @*<input class="form-control" type="text" required="">*@
+                        @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control" })
+                        <span class="text-danger" style="display:none" id="errorMsgForMob">Please Enter Valid Mobile Number</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <label>Primary Address</label>
+                        @*<textarea class="form-control" type="text" required=""> </textarea>*@
+                        @Html.TextAreaFor(m => m.PrimaryAddress, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <label>Secondary Address</label>
+                        @*<textarea class="form-control" type="text" required=""> </textarea>*@
+                        @Html.TextAreaFor(m => m.SecondaryAddress, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <label>Country</label>
+                     
+                        @Html.DropDownListFor(m => m.CountryName, (IEnumerable<SelectListItem>)ViewBag.CountryList, "--Select--", new { @class = "form-control custom-select" })
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <label>State</label>
+                       
+                        @Html.TextBoxFor(m => m.State, new { @class = "form-control" })
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <label>User Type</label>
+                        <div>
+                            @Html.RadioButtonFor(m=>m.UserType, true,new {@class= "with-gap", @id= "radio_3", @checked="checked"})
+                            
+                            <label for="radio_3">Admin</label>
+                            @Html.RadioButtonFor(m => m.UserType, false,new { @class ="with-gap", @id = "radio_4" })
+                            <label for="radio_4">Employee</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 m-t-15">
+                        <button type="submit" id="registerUser"class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light">
+                            Register
+                        </button>
+                    </div>
+                </div>
+            </div>
+           }
+        </div>
+    </div>
+</section>
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+
+    })
+    //------------>BUNDLING I DIDN'T USE BECAUSE OF SOME REASONS-------------//
+
+  
+    //for email validation
+    $('#EmailId').on("blur", function () {
+
+       
+
+        var email=$('#EmailId').val()
+        var regex = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+     
+        var d = regex.test(email);
+        if(!d)
+        {
+           
+            $('#errorMsg').show();
+            return false;
+        }
+        else
+        {
+           
+            $('#errorMsg').hide();
+            $.ajax({
+                type: "POST",
+               
+                url: "../../Registration/GetEmailId",
+                data: {Email:email},
+                dataType: "json",
+                success: function (Result) {
+
+                    var msg = eval(Result);
+                    if(msg==1)
+                    {
+                       
+                        $('#errorMsg').text('Email Already Register with Us');
+                        $('#errorMsg').show();
+                        return false;
+
+                    }
+                    else
+                    {
+                       
+                        $('#errorMsg').hide();
+                    }
+
+                },
+                error: function (request, status, error) {
+                    ShowMessage(error, 'Error');
+                }
+            });
+        }
+
+    })
+    //for phone number existance
+    $('#MobileNumber').on("blur", function () {
+
+        var mob = $('#MobileNumber').val()
+        
+         var regex =/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
+
+        var d = regex.test(mob);
+        if (!d) {
+
+            $('#errorMsgForMob').show();
+            return false;
+        }
+        else {
+
+            $('#errorMsgForMob').hide();
+            $.ajax({
+                type: "POST",
+
+                url: "../../Registration/Get_PhoneNumber",
+                data: { mob: mob },
+                dataType: "json",
+                success: function (Result) {
+
+                    var msg = eval(Result);
+                    if (msg == 1) {
+                      
+                        $('#errorMsgForMob').text('Mobile Already Register with Us');
+                        $('#errorMsgForMob').show();
+                        return false;
+
+                    }
+                    else {
+
+                        $('#errorMsgForMob').hide();
+                    }
+
+                },
+                error: function (request, status, error) {
+                    ShowMessage(error, 'Error');
+                }
+            });
+        }
+
+    })
+
+
+    $('#registerUser').click(function () {
+
+        
+        var name = $('#FirstName').val()
+        var Email = $('#EmailId').val()
+        var MbN = $('#MobileNumber').val()
+        var pa = $('#PrimaryAddress').val()
+        var Ca = $('#CountryName').val()
+        var state = $('#State').val()
+        if(name=='' ||Email=='' ||MbN==''||pa==''||Ca=='' ||state=='')
+
+        {
+            alert('please fill all mandatory fields')
+            return false;
+        }
+    })
+</script>
